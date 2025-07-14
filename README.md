@@ -4,6 +4,9 @@ project description:
 "A website that allows users to input values of physics formulas and visually interpret how such changes alter the results and components of the other parts of the formula.
 Users will be able to a range of different (commonly used) formula's partioned into their own areas of physics, e.g. "V = IR" would be avaliable within an "electrical" catagory."
 
+<img width="1365" height="767" alt="image" src="https://github.com/user-attachments/assets/22c50fc0-db4e-41cd-9dcb-e75d0751192c" />
+This just shows a rough idea of when each layer arrives
+
 # Preferences (what could help make the project achieve higher marks)
 1. Minimise the number of page reloads the user needs to do:
    - RAM converation is below User Experience, try to load more into ram and only have major changes signal a reload.
@@ -25,7 +28,7 @@ Users will be able to a range of different (commonly used) formula's partioned i
     | Storage   | 2GB HDD                    |  For the browser and DB caching, doesn't need to modern       |
     | Browser   | Supports ES6+, WASM, etc.  |  Needs to handle the new features that will be used           |
     | OS        | Linux, Windows, MACos, etc.|  Not important, just what browsers can be used on that OS     |
-    |___________|____________________________|_______________________________________________________________|
+   
 
     - The areas I need to allow for really is LINUX, Chromebooks, and phones due to the low ram capacities and lower raw performance.
 
