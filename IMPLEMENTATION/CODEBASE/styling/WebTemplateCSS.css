@@ -18,7 +18,7 @@ body {
     grid-template-rows: auto 1fr;
     height: 100vh; /*lays out the full webpage into grids*/
     column-gap: 100px; /* space between TB and MainPage */
-    row-gap: 20px; /* space between header and mainPage */
+    row-gap: 10px; /* space between header and mainPage */
     min-width: 950px;
     min-height: 550px;
 
@@ -40,9 +40,9 @@ body {
     align-self: center;
     height: 92%;
     width: 200px;
-    grid-template-rows: 20% repeat(5, 1fr);
+    grid-template-rows: 15% repeat(5, 1fr);
     /*ensures the logo is placed at the top and even button spacing*/
-    row-gap: 5%;
+    row-gap: 4%;
     justify-items: center;
     padding-left: 10px; /* adds spacing between buttons and
     screen edge */
@@ -52,13 +52,15 @@ body {
 }
 .taskBarButton {
     aspect-ratio: 5/3;
-    height: 110%;
-    min-height: 60px;
+    height: 100%;
+    min-width: 75px;
 
 }
 #Logo {
     aspect-ratio: 1/1;
-    width: 60%;
+    width: 18vh;
+    min-width: 100px;
+    max-width: 200px;
 }
 #BackgroundAccent {
     background: yellow;
@@ -73,7 +75,8 @@ body {
     grid-row: 0;
     position: absolute;
     left: 200px; /* places accent next to taskbar */
-    top: 110px;
+    top: 90px;
+    z-index: 0;
 }
 .mainPage {
     display: grid;
@@ -83,8 +86,12 @@ body {
     grid-column: 2;
     grid-row: 2;
     padding-right: 5px; /* Applies safe-zone for the */
-    padding-left: 5px; /* mainPage for visual comfort */
-    max-height: 95%
+    /* mainPage for visual comfort */
+    max-height: 95%;
+    z-index: 1;
+    /* Z-index places the main page above the
+    background accent as seen on the final
+    design */
 
 
 }
@@ -92,10 +99,14 @@ body {
 .subsection1 {
     background: teal;
     display: grid;
-    width: 91%;
+    width: 90%;
     height: 66%;
+    padding: 5px;
+    /* Padding ensures that the subsection is visually
+    separated to the mainPage */
 }
 #webpageTitle {
     display: grid;
     justify-items: center;
+    font-size: large;
 }
