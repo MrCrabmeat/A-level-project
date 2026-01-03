@@ -1,8 +1,4 @@
-* {
-    box-sizing: border-box; /* prevents web scrolling for a
-    static page */
-}
-
+/* Added fonts get declared here: */
 @font-face /*nunito normal font*/ {
     font-family: "nunito";
     /* nunito path under ./styling/fonts */
@@ -12,7 +8,6 @@
     font-style: normal;
     font-display: swap; /* reduces text load times */
 }
-
 body {
     background: crimson;
     font-family: "nunito", math;
@@ -20,19 +15,19 @@ body {
     grid-template-columns:200px 1fr;
     grid-template-rows: auto 1fr;
     height: 100vh; /*lays out the full webpage into grids*/
-    gap: 100px; /* space between elements */
-    margin: 0px; /* prevents web scrolling */
-    min-width: 963px;;
-    min-height: 770px;
+    column-gap: 100px; /* space between TB and MainPage */
+    row-gap: 10px; /* space between header and mainPage */
+    min-width: 950px;
+    min-height: 550px;
 }
 .websiteName_Desc {
     display: flex;
     /* flexbox works better than grid here for automatically
     organising the two text horizontally */
     align-items: center;
-    padding-top: 20px;
     gap: 52px;
-
+    /* Adjusts spacing between title and desc.
+    Preset to 52px to match the final design */
 }
 .taskBar {
     display: grid;
@@ -43,21 +38,29 @@ body {
     align-self: center;
     height: 92%;
     width: 200px;
-    grid-template-rows: auto repeat(5, 1fr);
+    grid-template-rows: 15% repeat(5, 1fr);
     /*ensures the logo is placed at the top and even button spacing*/
-    row-gap: clamp(20px, 5vh, 25px);
+    row-gap: 4%;
     justify-items: center;
+    align-items: center;
     padding-left: 10px; /* adds spacing between buttons and
     screen edge */
-
 }
+
+
 .taskBarButton {
-    width: 150px;
-    height: 90px;
+    aspect-ratio: 5/3;
+    height: 100%;
+    min-width: 75px;
+    max-width: 150px;
+    max-height: 90px;
+    border-radius: 10px;
 }
 #Logo {
     aspect-ratio: 1/1;
-    width: 80%;
+    width: 18vh;
+    min-width: 100px;
+    max-width: 200px;
 }
 #BackgroundAccent {
     background: yellow;
@@ -72,7 +75,8 @@ body {
     grid-row: 0;
     position: absolute;
     left: 200px; /* places accent next to taskbar */
-    top: 147px;
+    top: 90px;
+    z-index: 0;
 }
 .mainPage {
     display: grid;
@@ -81,18 +85,25 @@ body {
     in the bottom left by coordinating into the corresponding area*/
     grid-column: 2;
     grid-row: 2;
-    width: 96%; /*applies safe-zone for main page*/
-    height: 98%;
-
+    padding-right: 5px; /* Applies safe-zone for the */
+    /* mainPage for visual comfort */
+    max-height: 95%;
+    z-index: 1;
+    /* Z-index places the main page above the
+    background accent as seen on the final
+    design */
 }
-
 .subsection1 {
     background: teal;
     display: grid;
-    width: 91%;
+    width: 90%;
     height: 66%;
+    padding: 10px;
+    /* Padding ensures that the subsection is visually
+    separated to the mainPage */
 }
 #webpageTitle {
     display: grid;
     justify-items: center;
+    font-size: large;
 }
