@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box; /* prevents web scrolling for a
+    static page */
+}
+
+@font-face /*nunito normal font*/ {
+    font-family: "nunito";
+    /* nunito path under ./styling/fonts */
+    src: url("./fonts/Nunito-VariableFont_wght.ttf")
+    format("truetype"); /* simply filetype */
+    font-weight: 1 999;
+    font-style: normal;
+    font-display: swap; /* reduces text load times */
+}
+
+body {
+    background: crimson;
+    font-family: "nunito", math;
+    display: grid;
+    grid-template-columns:200px 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh; /*lays out the full webpage into grids*/
+    gap: 100px; /* space between elements */
+    margin: 0px; /* prevents web scrolling */
+    min-width: 963px;;
+    min-height: 770px;
+}
+.websiteName_Desc {
+    display: flex;
+    /* flexbox works better than grid here for automatically
+    organising the two text horizontally */
+    align-items: center;
+    padding-top: 20px;
+    gap: 52px;
+
+}
+.taskBar {
+    display: grid;
+    background: blue;
+    grid-column: 1;
+    grid-row: 1/ span 2; /* allows the taskbar to overlap across
+    multiple rows to span the whole screen */
+    align-self: center;
+    height: 92%;
+    width: 200px;
+    grid-template-rows: auto repeat(5, 1fr);
+    /*ensures the logo is placed at the top and even button spacing*/
+    row-gap: clamp(20px, 5vh, 25px);
+    justify-items: center;
+    padding-left: 10px; /* adds spacing between buttons and
+    screen edge */
+
+}
+.taskBarButton {
+    width: 150px;
+    height: 90px;
+}
+#Logo {
+    aspect-ratio: 1/1;
+    width: 80%;
+}
+#BackgroundAccent {
+    background: yellow;
+    aspect-ratio: 1/1; /* keeps the vector img uniform when scaled */
+    /*height isn't required due to aspect-ratio applying
+    width value to the x/y axis*/
+    width: clamp(150px, 20vw, 300px);
+    /*thresholds in clamp() help prevent scaling issues by
+    preventing over or under sizing of elements, such as
+    the background vector image*/
+    grid-column: 0;
+    grid-row: 0;
+    position: absolute;
+    left: 200px; /* places accent next to taskbar */
+    top: 147px;
+}
+.mainPage {
+    display: grid;
+    background: rebeccapurple;
+    /* As the webpage body is a grid, the section can be placed
+    in the bottom left by coordinating into the corresponding area*/
+    grid-column: 2;
+    grid-row: 2;
+    width: 96%; /*applies safe-zone for main page*/
+    height: 98%;
+
+}
+
+.subsection1 {
+    background: teal;
+    display: grid;
+    width: 91%;
+    height: 66%;
+}
+#webpageTitle {
+    display: grid;
+    justify-items: center;
+}
