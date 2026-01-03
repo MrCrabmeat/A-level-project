@@ -1,7 +1,4 @@
-* {
-    box-sizing: border-box; /* prevents web scrolling for a
-    static page */
-}
+
 
 @font-face /*nunito normal font*/ {
     font-family: "nunito";
@@ -20,17 +17,17 @@ body {
     grid-template-columns:200px 1fr;
     grid-template-rows: auto 1fr;
     height: 100vh; /*lays out the full webpage into grids*/
-    gap: 100px; /* space between elements */
-    margin: 0px; /* prevents web scrolling */
-    min-width: 963px;;
-    min-height: 770px;
+    column-gap: 100px; /* space between TB and MainPage */
+    row-gap: 20px; /* space between header and mainPage */
+    min-width: 950px;
+    min-height: 550px;
+
 }
 .websiteName_Desc {
     display: flex;
     /* flexbox works better than grid here for automatically
     organising the two text horizontally */
     align-items: center;
-    padding-top: 20px;
     gap: 52px;
 
 }
@@ -43,21 +40,25 @@ body {
     align-self: center;
     height: 92%;
     width: 200px;
-    grid-template-rows: auto repeat(5, 1fr);
+    grid-template-rows: 20% repeat(5, 1fr);
     /*ensures the logo is placed at the top and even button spacing*/
-    row-gap: clamp(20px, 5vh, 25px);
+    row-gap: 5%;
     justify-items: center;
     padding-left: 10px; /* adds spacing between buttons and
     screen edge */
 
+
+
 }
 .taskBarButton {
-    width: 150px;
-    height: 90px;
+    aspect-ratio: 5/3;
+    height: 110%;
+    min-height: 60px;
+
 }
 #Logo {
     aspect-ratio: 1/1;
-    width: 80%;
+    width: 60%;
 }
 #BackgroundAccent {
     background: yellow;
@@ -72,7 +73,7 @@ body {
     grid-row: 0;
     position: absolute;
     left: 200px; /* places accent next to taskbar */
-    top: 147px;
+    top: 110px;
 }
 .mainPage {
     display: grid;
@@ -81,8 +82,10 @@ body {
     in the bottom left by coordinating into the corresponding area*/
     grid-column: 2;
     grid-row: 2;
-    width: 96%; /*applies safe-zone for main page*/
-    height: 98%;
+    padding-right: 5px; /* Applies safe-zone for the */
+    padding-left: 5px; /* mainPage for visual comfort */
+    max-height: 95%
+
 
 }
 
