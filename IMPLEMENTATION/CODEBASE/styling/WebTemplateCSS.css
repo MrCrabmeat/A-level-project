@@ -24,7 +24,7 @@ body {
 .taskBarButton {
     aspect-ratio: 5/3;
     height: 100%;
-    min-width: 75px;
+    min-height: 60px;
     max-width: 150px;
     max-height: 90px;
     border-radius: 10px;
@@ -38,7 +38,7 @@ body {
 }
 .TBvector {
     aspect-ratio: 1/1;
-    width: 50%;
+    width: 40%;
 }
 
 .websiteName_Desc {
