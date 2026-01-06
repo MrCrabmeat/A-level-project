@@ -14,6 +14,7 @@
 // Set the const variables for the dark and
 // light mode for easier control over the
 // predetermined values
+
 const darkTheme = {
     TBvectorColour: '#0B0B0B',
     TBcolour: '#E4DDD8',
@@ -36,6 +37,7 @@ const lightTheme = {
     // themeID allows changeTheme() to identify the current website
     // theme to allow it to correctly switch to another theme.
 }
+
 let currentthemeID = ''
 // Sets a global variable to allow functions to identify the current
 // theme being used. It uses a string for readability and scalability due
@@ -68,7 +70,6 @@ themeLoader(lightTheme);
 function changeTheme() {
     if (currentthemeID === 'DARK') {
         themeLoader(lightTheme);}
-
     else if (currentthemeID === 'LIGHT') {
         themeLoader(darkTheme);}
     else {

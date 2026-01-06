@@ -9,6 +9,7 @@
     font-display: swap; /* reduces text load times */
 }
 
+/*noinspection ALL*/
 body {
     background: var(--BGcolour);
     font-family: "nunito", math;
@@ -44,6 +45,7 @@ span {
     background: var(--TBcolour);
     border: none;
 }
+
 .taskBarButton:hover {
     transition: filter 0.5s ease;
     filter: brightness(130%);}
@@ -53,6 +55,7 @@ span {
     transition: filter 0.1s;
     filter: brightness(67%);}
     /*Simply darkens button when pressed for responsiveness*/
+
 #BackgroundAccent {
     background: none;
     aspect-ratio: 1/1; /* keeps the vector img uniform when scaled */
