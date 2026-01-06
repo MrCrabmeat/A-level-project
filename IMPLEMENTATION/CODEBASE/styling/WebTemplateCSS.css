@@ -8,9 +8,9 @@
     font-style: normal;
     font-display: swap; /* reduces text load times */
 }
+
 body {
-    background: linear-gradient(
-            100deg, #020229 0%, #34013C 33%, #814508 100%);
+    background: var(--BGcolour);
     font-family: "nunito", math;
     display: grid;
     grid-template-columns:200px 1fr;
@@ -20,8 +20,13 @@ body {
     row-gap: 10px; /* space between header and mainPage */
     min-width: 950px;
     min-height: 550px;
+    margin: 0;
 }
+span {
+    color: var(--TBvectorColour);
+    /*Used for the taskbar buttons names*/
 
+}
 .taskBarButton {
     aspect-ratio: 5/3;
     height: 100%;
@@ -36,13 +41,18 @@ body {
     the default currently */
     text-align: center;
     gap: 12px;
-    background: #E4DDD8;
+    background: var(--TBcolour);
     border: none;
 }
 .taskBarButton:hover {
-    background: #f5EEE9;
-    /* 10% brightness increase */
-}
+    transition: filter 0.5s ease;
+    filter: brightness(130%);}
+    /*highlights the taskbar buttons using a
+    transition modifier to make it less abrupt*/
+.taskBarButton:active {
+    transition: filter 0.1s;
+    filter: brightness(67%);}
+    /*Simply darkens button when pressed for responsiveness*/
 #BackgroundAccent {
     background: none;
     aspect-ratio: 1/1; /* keeps the vector img uniform when scaled */
@@ -58,84 +68,85 @@ body {
     left: 200px; /* places accent next to taskbar */
     top: 90px;
     z-index: 0;
-    color: #ffffff;
+    color: var(--accessory);
     opacity: 10%;
     filter: blur(6px);
 }
 
-.TBvector {
-    aspect-ratio: 1/1;
-    width: 40%;
-    color: #0B0B0B;
-}
+    .TBvector {
+        aspect-ratio: 1/1;
+        width: 40%;
+        color: var(--TBvectorColour);
+    }
 
-.websiteName_Desc {
-    display: flex;
-    /* flexbox works better than grid here for automatically
-    organising the two text horizontally */
-    align-items: center;
-    gap: 52px;
-    /* Adjusts spacing between title and desc.
-    Preset to 52px to match the final design */
-    color: #EBFAFF;
-}
-.taskBar {
-    display: grid;
-    grid-column: 1;
-    grid-row: 1/ span 2;
-    /* allows the taskbar to overlap across
-       multiple rows to span the whole screen */
-    align-self: center;
-    height: 92%;
-    width: 200px;
-    grid-template-rows: 15% repeat(5, 1fr);
-    /*ensures the logo is placed at the top and even button spacing*/
-    row-gap: 4%;
-    justify-items: center;
-    align-items: center;
-    padding-left: 10px;
-    /* adds spacing between buttons and
-       screen edge */
-}
-#Logo {
-    aspect-ratio: 1/1;
-    width: 18vh;
-    min-width: 100px;
-    max-width: 200px;
-    color: #E4DDD8;
-}
+    .websiteName_Desc {
+        display: flex;
+        /* flexbox works better than grid here for automatically
+        organising the two text horizontally */
+        align-items: center;
+        gap: 52px;
+        /* Adjusts spacing between title and desc.
+        Preset to 52px to match the final design */
+        color: var(--MPtext);
+    }
+    .taskBar {
+        display: grid;
+        grid-column: 1;
+        grid-row: 1/ span 2;
+        /* allows the taskbar to overlap across
+           multiple rows to span the whole screen */
+        align-self: center;
+        height: 92%;
+        width: 200px;
+        grid-template-rows: 15% repeat(5, 1fr);
+        /*ensures the logo is placed at the top and even button spacing*/
+        row-gap: 4%;
+        justify-items: center;
+        align-items: center;
+        padding-left: 10px;
+        /* adds spacing between buttons and
+           screen edge */
+    }
+    #Logo {
+        aspect-ratio: 1/1;
+        width: 18vh;
+        min-width: 100px;
+        max-width: 200px;
+        color: var(--TBcolour);
+    }
 
 
-.mainPage {
-    display: grid;
-    background: none;
-    /* As the webpage body is a grid, the section can be placed
-    in the bottom left by coordinating into the corresponding area*/
-    grid-column: 2;
-    grid-row: 2;
-    padding-right: 5px; /* Applies safe-zone for the */
-    /* mainPage for visual comfort */
-    max-height: 95%;
-    z-index: 1;
-    /* Z-index places the main page above the
-    background accent as seen on the final
-    design */
-}
-.subsection1 {
-    background: none;
-    display: grid;
-    width: 90%;
-    height: 66%;
-    padding: 10px;
-    /* Padding ensures that the subsection is visually
-    separated to the mainPage */
-}
-#webpageTitle {
-    display: grid;
-    justify-items: center;
-    font-size: large;
-}
-#buttonSignOut{
-    gap: 20px;
+    .mainPage {
+        display: grid;
+        background: none;
+        /* As the webpage body is a grid, the section can be placed
+        in the bottom left by coordinating into the corresponding area*/
+        grid-column: 2;
+        grid-row: 2;
+        padding-right: 5px; /* Applies safe-zone for the */
+        /* mainPage for visual comfort */
+        max-height: 95%;
+        z-index: 1;
+        /* Z-index places the main page above the
+        background accent as seen on the final
+        design */
+    }
+    .subsection1 {
+        background: none;
+        display: grid;
+        width: 90%;
+        height: 66%;
+        padding: 10px;
+        /* Padding ensures that the subsection is visually
+        separated to the mainPage */
+    }
+    #webpageTitle {
+        display: grid;
+        justify-items: center;
+        font-size: large;
+    }
+    #buttonSignOut{
+        gap: 20px;
+    }
 }
 

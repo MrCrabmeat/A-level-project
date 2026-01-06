@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>WebpageTemplate</title>
+    <style> html, body {background: #000000;} </style>
+    <!-- presets the background to black to avoid the white flash caused by
+    natural loading delays with loading the JS file. Additionally, it makes
+    the lag from resizing the page less obvious -->
     <link rel="stylesheet" href="./styling/WebTemplateCSS.css">
+    <script src="./ColourationLogic.js" defer></script>
+<!-- defer MUST be used. The script won't load into the DOM otherwise -->
 </head>
 <body>
     <!-- best practice is to group the
@@ -52,7 +58,7 @@ main page together for improved stability
     <!-- <span> is used to follow the HTML technical standards.
         The alt just outputs text to replace the SVG currently -->
         </button>
-        <button class="taskBarButton" id="buttonTheme">
+        <button class="taskBarButton" id="buttonTheme" onclick="changeTheme()">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="TBvector">
                 <rect width="256" height="256" fill="none"/>
                 <line x1="128" y1="40" x2="128" y2="32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
