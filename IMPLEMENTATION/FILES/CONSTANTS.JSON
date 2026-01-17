@@ -1,0 +1,13 @@
+{
+  "avogadroConst": {"value": 6.02, "unit": "mol-1", "expo": 23},
+  "boltzmannConst": {"value": 1.38, "unit": "J/k", "expo": -23},
+  "electronMass": {"value":  9.11, "unit":  "kg", "expo":  -31},
+  "gravity": {"value": 9.81, "unit": "m/s^2", "expo": 0},
+  "gravitationalConst": {"value": 6.67, "unit": "N*m^2/kg^2", "expo": -11},
+  "lightSpeedVacuum": {"value": 2.99, "unit": "m/s", "expo": 8},
+  "nucleonMass": {"value":  1.67},
+  "planckConst": {"value": 6.63, "unit": "J*s", "expo": -34},
+  "stefanConst": {"value": 5.67, "unit": "W*m^-2*K^-4", "expo": -8},
+  "wienConst": {"value":  2.90, "unit": "m*K", "expo":  -3}
+}
+

@@ -3,10 +3,14 @@
 
 {
   "constants": {
-    "boltzmannConst":{"value":1.38,"unit":"J/k","exp":-23},
-    "gravity":{"value":9.81,"unit":"m/s^2","exp":0},
-    "gravitationalConst":{"value":6.67,"unit":"N*m^2/kg^2","exp":-11},
-    "lightVaccum":{"value":2.99,"unit":"m/s","exp":8}
+    "boltzmannConst":{"value":1.38,"unit":"J/k",
+      "expo":-23},
+    "gravity":{"value":9.81,"unit":"m/s^2",
+      "expo":0},
+    "gravitationalConst":{"value":6.67,"unit":"N*m^2/kg^2",
+      "expo":-11},
+    "lightVaccum":{"value":2.99,"unit":"m/s",
+      "expo":8}
   }
 }
 

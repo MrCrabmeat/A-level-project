@@ -78,3 +78,4 @@ function changeTheme() {
     // If no themeID is identified, the function falls back onto the
     // default theme and outputs and error message.
 }
+
