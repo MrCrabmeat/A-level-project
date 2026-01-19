@@ -15,10 +15,13 @@ async function fileImportChecker() {
         try {
             let fileAccess = await fetch(constantsFile);
             if (fileAccess.ok) {
-                let constants = fileAccess.json();
-                // converts into JSON data
+                let constants = await fileAccess.json();
+                // converts into JSON data - requires await to ensure
+                // the data is passed for immunity
                 return Object.freeze(constants);}
-            // sets constants access as single source of truth
+            // sets constants access as single source of truth,
+            // reinforces the stability of the code by preventing
+            // rounding or unwanted edits to occur in the return.
         } catch {catchReport = true;}
         await new Promise(timeOut => setTimeout(timeOut, varTime));
         varTime = varTime*2;
@@ -31,11 +34,36 @@ async function fileImportChecker() {
     throw new Error(`failed to fetch ${constantsFile}`);
 }
 
-
-
-// Constant
-class calculationLogic {
-    constructor(constants) {
-        this.constants = constants;
+// Inputs get assigned to into an array
+function inputHandler(userInputs) {
+    let inputArr = {};
+    let i = 0;
+    while (i < userInputs.length) {
+        const variable = `Variable${i+1}`;
+        // Creates dynamic variable copies to prevent corruption of
+        // the original inputs
+        inputArr[variable] = userInputs[i];
+        // assigns a variable for each input
+        i++;
     }
+    return inputArr;
+}
+
+// once the variables are established, the next stage is to
+// pass these onto a logic handler to for control over the
+// complication of each variable.
+function logicHandler(inputArr, constants) {
+    // Unpackage the inputArr contents from its object.
+    const values = Object.values(inputArr);
+    // This unpackage reformats the object into an array
+    // so the data can easily be applied to variables.
+
+    // ADD MANUAL EXPERIMENT SPECIFIC VARIABLES HERE:
+    const test = {value: values[0], unit: "m/s", expo: 1};
+    // example - must use const as it is a reactant
+    // NOT product.
+    const {electronMass} = constants; /// placeholder
+    // using this rather than: const x = constants.x
+    // ensures the value is undefined rather than throwing
+    // a type-error and crashing.
 }
