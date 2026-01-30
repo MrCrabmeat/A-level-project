@@ -1,6 +1,7 @@
-
+// nodeJS specific command to asynchronously load file contents:
+import {readFileSync} from "node:fs";
 // CONSTANTS.JSON directory path: ./FILES/CONSTANTS.JSON
-const constantsFile = "./FILES/CONSTANTS.JSON";
+const constantsFile = "../FILES/CONSTANTS.JSON";
 // To ensure if the file was found, this function checks
 // whether the import was successful.
 async function fileImportChecker() {
@@ -33,37 +34,70 @@ async function fileImportChecker() {
     }
     throw new Error(`failed to fetch ${constantsFile}`);
 }
+//NodeJS testing variation
 
-// Inputs get assigned to into an array
-function inputHandler(userInputs) {
-    let inputArr = {};
-    let i = 0;
-    while (i < userInputs.length) {
-        const variable = `Variable${i+1}`;
-        // Creates dynamic variable copies to prevent corruption of
-        // the original inputs
-        inputArr[variable] = userInputs[i];
-        // assigns a variable for each input
-        i++;
+async function fileImportCheckerNODEJS() {
+    const fileFetchAttemptsLimit = 5;
+    let varTime = 100 // exponential time delay between reattempts
+    let catchReport = false;
+    for (let i = 0; i < fileFetchAttemptsLimit; i++) {
+        try {
+            let fileAccess = readFileSync(constantsFile);
+            // replaces fetch for Node.js - same purpose.
+            const constants = JSON.parse(fileAccess)
+            return Object.freeze(constants);
+        } catch {catchReport = true;}
+        await new Promise(timeOut => setTimeout(timeOut, varTime));
+        varTime = varTime*2;
     }
-    return inputArr;
+    throw new Error(`failed to fetch ${constantsFile}`);
 }
 
-// once the variables are established, the next stage is to
-// pass these onto a logic handler to for control over the
-// complication of each variable.
-function logicHandler(inputArr, constants) {
-    // Unpackage the inputArr contents from its object.
-    const values = Object.values(inputArr);
-    // This unpackage reformats the object into an array
-    // so the data can easily be applied to variables.
 
+
+// Inputs get assigned to into an object
+function inputHandler(userInputs) {
+    return {
+        // Input experiment specific variables here:
+        velocity: userInputs[0], // temporary example
+        velocityExpo: userInputs[1],
+        voltage: userInputs[2],
+        voltageExpo: userInputs[3],
+    };
+}
+
+function logicHandler(inputObject, constants) {
     // ADD MANUAL EXPERIMENT SPECIFIC VARIABLES HERE:
-    const test = {value: values[0], unit: "m/s", expo: 1};
-    // example - must use const as it is a reactant
-    // NOT product.
-    const {electronMass} = constants; /// placeholder
-    // using this rather than: const x = constants.x
-    // ensures the value is undefined rather than throwing
-    // a type-error and crashing.
+    // must use const as it is a reactant - NOT product.
+    const velocity = {value: inputObject.velocity, unit: "m/s", expo: inputObject.velocityExpo};
+    const voltage = {value: inputObject.voltage, unit: "m^2/s^3/A", expo: inputObject.voltageExpo};
+    const {electronMass} = constants; /// placeholders
+    const {electronCharge} = constants;
+
+    // Experimental equations go here:
+    // example:
+    // Electron Voltage dependant variable
+    const result = {} // stores results
+    // let x = ((y.value * 10^y.expo) *operation* (z.value * 10^z.expo))
+    let electronVoltage = ((voltage.value * (10 ** voltage.expo))*(electronCharge.value * (10 ** electronCharge.expo)));
+    // for exemplar purposes, assume voltage is being found
+    // v = sqrt(2eV/m)
+    let velocityExample = Math.sqrt((2 * electronVoltage)/(electronMass.value * (10 ** electronMass.expo)));
+    result.velocity = objectConversion(velocityExample);
+    return result;
 }
+
+function objectConversion(resultant) {
+    try {
+        const expoExtract = Math.floor(Math.log10(Math.abs(resultant)));
+        const mantissa = resultant / (10 ** expoExtract);
+        return {mantissa, expoExtract};
+    }
+    catch {new Error("Failed to convert resultant into object format");}
+}
+// test (temporary)
+const constants = await fileImportCheckerNODEJS();
+const inputs = inputHandler([7, 0, 8, 4]);
+const result = logicHandler(inputs, constants);
+console.log(constants);
+console.log(result);

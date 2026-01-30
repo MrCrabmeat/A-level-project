@@ -1,6 +1,7 @@
 {
   "avogadroConst": {"value": 6.02, "unit": "mol-1", "expo": 23},
   "boltzmannConst": {"value": 1.38, "unit": "J/k", "expo": -23},
+  "electronCharge": {"value":  1.60, "unit":  "C", "expo":  -19},
   "electronMass": {"value":  9.11, "unit":  "kg", "expo":  -31},
   "gravity": {"value": 9.81, "unit": "m/s^2", "expo": 0},
   "gravitationalConst": {"value": 6.67, "unit": "N*m^2/kg^2", "expo": -11},
