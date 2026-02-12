@@ -98,6 +98,7 @@ function objectConversion(resultant) {
 // test (temporary)
 const constants = await fileImportCheckerNODEJS();
 const inputs = inputHandler([7, 0, 8, 4]);
-const result = logicHandler(inputs, constants);
-console.log(constants);
+
+// export the result as a constant to prevent alterations
+export const result = logicHandler(inputs, constants);
 console.log(result);
