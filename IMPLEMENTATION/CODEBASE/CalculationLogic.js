@@ -101,4 +101,4 @@ const inputs = inputHandler([7, 0, 8, 4]);
 
 // export the result as a constant to prevent alterations
 export const result = logicHandler(inputs, constants);
-console.log(result);
+

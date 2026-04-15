@@ -1,5 +1,5 @@
 //Obtain the resultant data passed from the calculation logic
-import {result} from './calculationLogic.js';
+import {result} from './CalculationLogic.js';
 
 // Parent function to handle verification and validation
 function verifyResult(result) {
@@ -22,4 +22,4 @@ function numericalTypeValidation(result) {
 }
 
 export const verificationOutput = verifyResult(result);
-console.log(verificationOutput + " VERIFICATION");
+

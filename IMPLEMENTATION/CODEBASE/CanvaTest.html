@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PhysicsInMotion — Velocity Arc Demo</title>
+    <style>
+        html, body { height: 100%; margin: 0; background: #111; display: grid; place-items: center; }
+        .card {
+            width: min(900px, 92vw);
+            aspect-ratio: 16 / 9;
+            background: #e9e2dd;
+            border-radius: 18px;
+            box-shadow: 0 18px 70px rgba(0,0,0,.55);
+            overflow: hidden;
+            position: relative;
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <canvas id="sim"></canvas>
+</div>
+
+<script>
+    /* =========================
+       Result formatting helpers
+       ========================= */
+    function sciObjToNumber({ mantissa, expoExtract }) {
+        return mantissa * Math.pow(10, expoExtract);
+    }
+
+    function numberToSciObj(x) {
+        if (!Number.isFinite(x) || x === 0) return { mantissa: x === 0 ? 0 : NaN, expoExtract: 0 };
+        const sign = Math.sign(x);
+        const abs = Math.abs(x);
+        const expo = Math.floor(Math.log10(abs));
+        const mantissa = sign * (abs / Math.pow(10, expo));
+        return { mantissa, expoExtract: expo };
+    }
+
+    /* =========================
+       Physics placeholder
+       v = sqrt(2 e V / m)
+       ========================= */
+    const E = 1.602176634e-19;
+    function calcVelocity({ V, m, q = E }) {
+        if (!(Number.isFinite(V) && Number.isFinite(m) && Number.isFinite(q))) return NaN;
+        if (V < 0 || m <= 0) return NaN;
+        return Math.sqrt((2 * Math.abs(q) * V) / m);
+    }
+
+    /* =========================
+       Canvas setup (DPR safe)
+       ========================= */
+    const canvas = document.getElementById("sim");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvasToCSSPixels() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+        canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); // draw in CSS pixels
+        return { w: rect.width, h: rect.height, dpr };
+    }
+
+    let W = 0, H = 0;
+    function onResize() {
+        const r = resizeCanvasToCSSPixels();
+        W = r.w; H = r.h;
+    }
+    window.addEventListener("resize", onResize);
+    onResize();
+
+    /* =========================
+       Demo: use your output shape
+       ========================= */
+    // Example: your calculation logic output
+    const result = { velocity: { mantissa: 0.587, expoExtract: 8 } };
+    // If you want it computed from V/m:
+    // const vNum = calcVelocity({ V: 1000, m: 9.109e-31 });
+    // const result = { velocity: numberToSciObj(vNum) };
+
+    function formatVelocityLabel(vObj) {
+        const m = vObj.mantissa;
+        const e = vObj.expoExtract;
+        if (!Number.isFinite(m) || !Number.isFinite(e)) return "v = NaN";
+        return `v = ${m.toFixed(3)}e${e} m/s`;
+    }
+
+    /* =========================
+       Animation: “rod + mass on arc”
+       - Treat velocity as tangential speed at radius r
+       - ω = v / r
+       - We clamp ω so it’s visually sane
+       ========================= */
+    let tPrev = performance.now();
+    let theta = -Math.PI * 0.15; // start slightly left of vertical
+
+    function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
+
+    function drawScene(dt) {
+        ctx.clearRect(0, 0, W, H);
+
+        // Layout tuned to your screenshot vibes
+        const pad = 36;
+        const pivot = { x: W * 0.62, y: H * 0.28 };
+        const r = Math.min(W, H) * 0.30;
+
+        // Velocity -> angular speed (clamped for demo)
+        const v = sciObjToNumber(result.velocity);
+        // Convert huge m/s into a usable on-screen speed.
+        // This is NOT physically scaled; it’s a visual mapping.
+        const omega = clamp(v / (r * 2500000), 0.25, 2.2); // rad/s-ish
+        theta += omega * dt;
+
+        // End mass position
+        const end = {
+            x: pivot.x + r * Math.sin(theta),
+            y: pivot.y + r * Math.cos(theta)
+        };
+
+        // dashed vertical reference line
+        ctx.save();
+        ctx.lineWidth = 3;
+        ctx.setLineDash([10, 10]);
+        ctx.strokeStyle = "rgba(0,0,0,0.35)";
+        ctx.beginPath();
+        ctx.moveTo(pivot.x, pivot.y);
+        ctx.lineTo(pivot.x, pivot.y + r * 1.25);
+        ctx.stroke();
+        ctx.restore();
+
+        // dashed arc path (top-ish)
+        ctx.save();
+        ctx.lineWidth = 4;
+        ctx.setLineDash([10, 10]);
+        ctx.strokeStyle = "rgba(0,0,0,0.55)";
+        ctx.beginPath();
+        ctx.arc(pivot.x, pivot.y, r, Math.PI * 1.15, Math.PI * 1.95, false);
+        ctx.stroke();
+        ctx.restore();
+
+        // arrow head on arc (right side)
+        const arrowAng = Math.PI * 1.92;
+        const ax = pivot.x + r * Math.cos(arrowAng);
+        const ay = pivot.y + r * Math.sin(arrowAng);
+        ctx.save();
+        ctx.translate(ax, ay);
+        ctx.rotate(arrowAng + Math.PI * 0.5);
+        ctx.fillStyle = "rgba(0,0,0,0.65)";
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-10, -22);
+        ctx.lineTo(10, -22);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+
+        // rod
+        ctx.save();
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = "rgba(0,0,0,0.85)";
+        ctx.beginPath();
+        ctx.moveTo(pivot.x, pivot.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+        ctx.restore();
+
+        // masses
+        const massR = Math.min(W, H) * 0.045;
+        ctx.fillStyle = "#b26b1d";
+        ctx.beginPath(); ctx.arc(pivot.x, pivot.y, massR, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(end.x, end.y, massR, 0, Math.PI * 2); ctx.fill();
+
+        // bottom-left velocity text (like your screenshot)
+        ctx.fillStyle = "rgba(0,0,0,0.70)";
+        ctx.font = "20px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+        ctx.fillText(formatVelocityLabel(result.velocity), pad, H - pad);
+    }
+
+    function loop(now) {
+        const dt = Math.min(0.05, (now - tPrev) / 1000);
+        tPrev = now;
+        drawScene(dt);
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+
+    // quick sanity: log the object so you can see it’s “running”
+    console.log("Using result:", result);
+</script>
+</body>
+</html>
